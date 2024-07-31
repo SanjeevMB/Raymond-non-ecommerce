@@ -1,0 +1,64 @@
+.glow-section-top .splide__arrow--next{
+    top: 50%;
+    right: -2%;
+}
+.diwali-image-container img{
+    height: auto;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+.glow-section-top .splide__arrow--prev{
+    top: 50%;
+    left: -2%;
+}
+.glow-section-top .splide:not(.is-overflow) .splide__pagination{
+    display: flex;
+    align-items: center;
+    bottom: -2.5rem;
+}
+ .glow-section-top .splide__arrow svg{
+    fill: #fff;
+ }
+ .glow-section-top .splide__arrow{
+    background: transparent;
+ }
+ .diwali-heading{
+    text-align: center;
+    text-transform: uppercase;
+    padding-bottom: 3.2rem;
+ }
+ .glow-section-top .splide__arrow svg {
+    width: 3.8rem;
+    height: 2.2rem;
+}
+.glow-section-top .splide__pagination__page {
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    background: #3B5265;
+}
+.glow-section-top .splide__pagination__page.is-active{
+    background:#fff;
+    transform: scale(1);
+}
+
+
+ @media screen and (max-width:749px){
+    .glow-section-top .splide__arrow--next {
+        top: 50%;
+        right: 2%;
+    }
+    .glow-section-top .splide__arrow--prev {
+        top: 50%;
+        left: 2%;
+    }
+    .glow-section-top .splide__pagination{
+        bottom: -2.5rem;
+    }
+    .diwali-heading{
+        font-size: 3.2rem;
+        padding-bottom: 2.4rem;
+    }
+   
+}

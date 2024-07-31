@@ -1,0 +1,150 @@
+{{ "image-comparison.css" | asset_url | stylesheet_tag }}
+<script src="{{ 'image-comparison.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .padding-{{ section.id }} {
+    padding-block: {{ section.settings.padding-top | times: 0.75 | round: 0 }}px {{ section.settings.padding-bottom | times: 0.75 | round: 0 }}px;
+      
+  }
+  @media screen and (min-width: 750px) {
+    .padding-{{ section.id }} {
+      padding-block: {{ section.settings.padding-top }}px {{ section.settings.padding-bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="padding-{{ section.id }}">
+  <div class="{%- unless section.settings.full_width %} page-width {% endunless -%}">
+    {% assign class = 'h1 center' %}
+    {% render 'title-decor', 
+      heading: section.settings.heading,
+      description: section.settings.description,
+      decoration: section.settings.title_decor, 
+      class: class,
+      margin: section.settings.margin_bottom
+    %}
+    <div class="mt-3">
+      <image-comparison class="image-comparison" data-layout="horizontal" style="animate --percent: 3%">
+        <span class="image-comparison__animate"></span>
+        <div class="image-comparison__before image-comparison__item-start">
+          <div class="image-comparsion-product-container">
+            {% if section.settings.first_image != blank %}
+                {% render "picture", class: "media media--custom", mobileSrc: section.settings.first_image, desktopSrc: section.settings.desktop_first_image %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="image-comparison__after image-comparison__item--start">
+          <div class="image-comparsion-product-container">
+            {% if section.settings.second_image != blank %}
+              {% render "picture", class: "media media--custom", mobileSrc: section.settings.second_image, desktopSrc: section.settings.desktop_second_image %}
+            {% endif %}
+          </div>
+        </div>
+            <button type="button" class="image-comparison__button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="33" viewBox="0 0 24 33" fill="none">
+                  <rect x="0.00183105" y="0.489502" width="23.2769" height="32.1061" fill="white"/>
+                  <line x1="4.81824" y1="7.71419" x2="19.266" y2="7.71419" stroke="black" stroke-width="1.60531"/>
+                  <line x1="4.81824" y1="15.7396" x2="19.266" y2="15.7396" stroke="black" stroke-width="1.60531"/>
+                  <line x1="4.81824" y1="23.7669" x2="19.266" y2="23.7669" stroke="black" stroke-width="1.60531"/>
+              </svg>
+             </span>
+          </button>
+      </image-comparison>
+    </div>
+  </div>
+</div>
+  
+{% schema %}
+{
+  "name": "Image comparsion",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading ",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Desktop images"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_first_image",
+      "label": "Select first comparsion image"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_second_image",
+      "label": "Select second comparsion image"
+    },
+    {
+      "type": "header",
+      "content": "Mobile images"
+    },
+    {
+      "type": "image_picker",
+      "id": "first_image",
+      "label": "Select first comparsion image"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image",
+      "label": "Select second comparsion image"
+    },
+    {
+      "type": "header",
+      "content": "Desktop padding settings"
+    },
+    {
+      "type": "range",
+      "id": "padding-top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image comparsion"
+    }
+  ]
+}
+{% endschema %}

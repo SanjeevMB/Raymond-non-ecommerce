@@ -1,0 +1,228 @@
+{{ 'video-thumbnail.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'video-thumbnail.js' | asset_url }}" defer></script>
+
+{% style %}
+  .padding-{{ section.id }} {
+    padding-block: {{ section.settings.padding-top | times: 0.75 | round: 0 }}px {{ section.settings.padding-bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .padding-{{ section.id }} {
+      padding-block: {{ section.settings.padding-top }}px {{ section.settings.padding-bottom }}px;
+    } 
+
+  }
+{% endstyle %}
+{% style %}  
+  :root {
+    --arrow-color: {{ section.settings.arrow_color.red }}, {{ section.settings.arrow_color.green }}, {{ section.settings.arrow_color.blue }} ;
+  }
+{% endstyle %} 
+
+<div class="padding-{{ section.id }} video-thumbnail-slide__wrapper {%- unless section.settings.full_width %} page-width {% endunless -%}">
+  {% assign class = 'h1 center' %}
+  {% render 'title-decor', 
+    heading: section.settings.heading,
+    decoration: section.settings.title_decor, 
+    class: class,
+    margin: section.settings.margin_bottom
+  %}
+
+  <div class="video-thumbnail__main-slider splide" id="main-slider">
+    {% comment %} splide track on main carousel {% endcomment %}
+    <div class="splide__track video-thumbnail__splide-track">
+      <ul class="splide__list">
+        {% for block in section.blocks %}
+          <li class="splide__slide">
+            {% if block.settings.image != blank and block.settings.mobile_image != blank %}
+              {% render "picture", class: "media video-thumbnail__custom-image", mobileSrc: block.settings.mobile_image, desktopSrc: block.settings.image %}
+            {%elsif block.settings.video != blank %}
+              <div class="video_container {% if block.settings.autoplay %}autoplay{% endif %}">
+                <div class="desktop_video">
+                  {{ block.settings.video | video_tag: autoplay: block.settings.autoplay, loop: block.settings.loop, muted: true, controls: block.settings.controls }}
+                </div>
+                <div class="mobile_video">
+                  {{ block.settings.mobile_video | video_tag: autoplay: block.settings.autoplay, loop: block.settings.loop, muted: true, controls: block.settings.controls }}
+                </div>
+                <div class="video_state_container">
+                  {% render 'icon' with 'video-thumbnail' %}
+                </div>
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="splide-container video-thumbnail-slider splide is-overflow" id="thumbnail-slider">
+    {% comment %} spldie arrows {% endcomment %}
+    <div class="splide__arrows video-thumbnail__arrow-container splide--arrow-{{ section.id }}">
+      <button class="splide__arrow splide__arrow--prev">
+        {% render 'icon' with 'splide-left-arrow' %}
+      </button>
+      <button class="splide__arrow splide__arrow--next">
+        {% render 'icon' with 'splide-right-arrow' %}
+      </button>
+    </div>
+    {% comment %} splide track in thumbnail {% endcomment %}
+    <div class="splide__track">
+      <ul class="splide__list">
+        {% for block in section.blocks %}
+          <li class="splide__slide">
+            {% if block.settings.thumbnail_cover_image or block.settings.image != blank %}
+              {% if block.settings.thumbnail_cover_image != blank %}
+                {% render "picture", class: "media video-thumbnail-image", mobileSrc: block.settings.thumbnail_cover_image, desktopSrc: block.settings.thumbnail_cover_image %}
+              {% elsif block.settings.image %}
+                {% render "picture", class: "media video-thumbnail-image", mobileSrc: block.settings.image, desktopSrc: block.settings.image %}
+              {% endif %}
+            {% elsif block.settings.video != blank %}
+              {% render "picture", class: "media video-thumbnail-image", mobileSrc: block.settings.thumbnail_cover_image, desktopSrc: block.settings.thumbnail_cover_image %}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>   
+</div>
+
+{% schema %}
+{
+  "name": "Video thumbnail",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading ",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "info": "select the checkbox for making section full width",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Desktop padding settings"
+    },
+    {
+      "type": "range",
+      "id": "padding-top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video-block",
+      "name": "Video Block",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Main slide image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select image for desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Select image for mobile"
+        },
+        {
+          "type": "header",
+          "content": "Main slide video"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Select desktop video",
+          "info": "If image is already selected, based on priority image will be shown"
+        },
+        {
+          "type": "video",
+          "id": "mobile_video",
+          "label": "Select mobile video",
+          "info": "If image is already selected, based on priority image will be shown"
+        },
+        {
+          "type": "header",
+          "content": "Video controls"
+        },
+        {
+          "type": "checkbox",
+          "id": "loop",
+          "label": "Loop through the video while playing",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "autoplay",
+          "label": "Autoplay the video",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "controls",
+          "label": "Show controls on video",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Thumbnail image for Main slide"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail_cover_image",
+          "label": "Select thumbnail cover image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video thumbnail"
+    }
+  ]
+}
+{% endschema %}

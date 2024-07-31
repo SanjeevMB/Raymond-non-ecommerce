@@ -1,0 +1,141 @@
+{{ 'infinite-scroll.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  :root {
+    --marquee-speed: {{ section.settings.scroll_speed }}s;
+  }
+  .padding-{{ section.id }} {
+     padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+     padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+   }
+   @media only screen and (min-width: 750px) {
+     .padding-{{ section.id }} {
+       padding-top: {{ section.settings.padding_top }}px;
+       padding-bottom: {{ section.settings.padding_bottom }}px;
+     }
+   }
+{% endstyle %}
+
+<div class="padding-{{ section.id }} {%- unless section.settings.full_width %} page-width {% endunless -%}">
+  {% assign class = 'h1 center' %}
+  {% render 'title-decor', 
+    heading: section.settings.heading,
+    decoration: section.settings.title_decor, 
+    class: class,
+    margin: section.settings.margin_bottom
+  %}
+  <div class="infinite-scroll_wrapper">
+<div class="infinite-scroll_inner {% unless section.settings.starting_position %} half_image{% endunless %}">
+      {% for block in section.blocks %}
+        <div>
+          {% for block in section.blocks %}
+            <div class="infinite-scroll__item">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 416 | image_tag }}
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder' }}  
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Infinite Scroll",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading ",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "sec",
+      "label": "Scroll Speed",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "info": "select the checkbox for making section full width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "starting_position",
+      "label": "Starting position",
+      "info": "select the checkbox fto start section with half image",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Scroll"
+    }
+  ]
+}
+{% endschema %}

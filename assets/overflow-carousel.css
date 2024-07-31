@@ -1,0 +1,122 @@
+.park_trending_image_text_carousel {
+	padding: 0px;
+}
+
+.park_trending_image_text_carousel .park_trending_image_box img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.park_trending_image_text_carousel .park_trending_overflow_image {
+	margin-top: 20px;
+	padding: 0px 20px 0px 20px;
+	border: 1px solid #828282;
+	border-bottom: none;
+}
+
+.park_trending_image_text_carousel .park_trending_title {
+	padding: 16px;
+	border: 1px solid #828282;
+	border-top: none;
+	margin: 0px;
+	text-align: center;
+}
+
+.park_trending_image_text_carousel .border_none {
+	border: none;
+}
+
+.park_trending_image_text_carousel .park_trending_image_box_out {
+	position: relative;
+	bottom: 20px;
+}
+
+.park_trending_image_text_carousel .park_trending_overflow_image_out {
+	margin-top: 20px;
+	padding: 0px 20px 0px 20px;
+}
+
+.park_trending_image_text_carousel .park_trending_image_box_in {
+	position: relative;
+	bottom: 0px;
+}
+
+.park_trending_image_text_carousel .park_trending_overflow_image_in {
+	margin-top: 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.park_trending_image_text_carousel .title_inside {
+	position: absolute;
+	width: 84%;
+	bottom: 3.2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	border: none;
+	background: #FFF;
+}
+
+.park_trending_image_text_carousel .park_trending_title svg {
+	position: relative;
+	top: 0.2rem;
+	left: 3%;
+}
+
+.display_arrow_icon {
+	display: none;
+}
+
+.heading_style {
+  color: #000;
+  font-size: 32px;
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2rem 1.5rem;    
+}
+
+@media screen and (min-width: 768px) {
+
+	.park_trending_image_text_carousel .park_trending_image_box img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+  .heading_style {
+    font-size: 42px;
+    line-height: 40px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4rem 8.47%;    
+  }
+
+}
+
+/* Style for arrow and pagination */
+
+.arrow_pagination {
+	text-align: center;
+	margin-top: -2rem;
+}
+
+.splide__arrow--prev svg {
+  transform: scaleX(1);
+}
+
+.splide__arrow--prev {
+  left: 78%;
+}
+
+.splide__arrows {
+	display: inline-flex;
+}
+
+.splide__arrow {
+  border-radius: 0;
+  border: 1px solid black;
+}

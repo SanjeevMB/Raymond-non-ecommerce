@@ -1,0 +1,140 @@
+
+{{ 'diwali-glow.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-lookbook.js' | asset_url }}" defer="defer"></script>
+{% style %}
+  .padding-{{ section.id }} {
+   padding-top:{{ section.settings.padding_top1 }}px;
+   padding-bottom: {{ section.settings.padding_bottom1 }}px;
+  }
+  .background-image {
+   {% assign mobileSrc = section.settings.image %}
+   background-image: url({{ mobileSrc | img_url: '800x' }});
+  }
+  .custom-width{
+   width: 80%;
+   margin: 0 auto;
+   padding: 3.4rem 0 3.4rem 0;
+  }
+  
+  @media screen and (min-width:750px){
+  .glow-section-top{
+    padding:0 8.5%;
+  }
+  .custom-width{
+    width:93%;
+    margin:0 auto;
+    padding-top: 4.2rem;
+    padding-bottom: 4.2rem;
+  }
+  
+  .padding-{{ section.id }} {
+  padding-top:{{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  }
+{% endstyle %}
+
+<div class="glow-section-top padding-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="h1 diwali-heading">{{ section.settings.heading_text }}</div>
+  <div class="background-image">
+    <div class="splide" id="diwali-slider">
+        <div class="splide__track custom-width">
+          <ul class="splide__list">
+           {% for block in section.blocks %}
+            <li class="splide__slide">
+             <div class="diwali-image-container">
+               {% render 'picture', class:"", mobileSrc: block.settings.image_for_desktop, desktopSrc: block.settings.image_for_desktop %}
+             </div>
+            </li>
+           {% endfor %}
+         </ul>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "diwali-glow",
+  "tag": "section",
+  "settings": [
+    {
+    "type": "color_scheme",
+    "id": "color_scheme",
+    "default": "scheme_10",
+    "label": "Color Scheme"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "background Image Desktop"
+    },
+    {
+      "type": "text",
+      "label": "Heading Text",
+      "id": "heading_text"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_top1",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom1",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile Bottom Padding",
+      "default": 52
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "image",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Add Slide Image",
+          "id": "image_for_desktop"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "diwali-glow"
+    }
+  ]
+}
+{% endschema %}

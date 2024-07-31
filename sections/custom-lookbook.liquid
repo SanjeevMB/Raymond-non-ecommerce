@@ -1,0 +1,136 @@
+{{ 'custom-lookbook.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-lookbook.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .padding-{{ section.id }} {
+    padding-top:{{ section.settings.padding_top1 }}px;
+    padding-bottom: {{ section.settings.padding_bottom1 }}px;
+    }
+    @media screen and (min-width:750px){
+      .padding-{{ section.id }} {
+    padding-top:{{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    }
+{% endstyle %}
+<div class="padding-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="custom-lookbook-container">
+    <div class="h1 look-bookheading" style="color:{{ section.settings.body_text }}">{{ section.settings.heading }}</div>
+    <slider-img class="splide " id="lookbook">
+      <div class="splide__arrows">
+        <button class="splide__arrow splide__arrow--prev">
+          {% render 'splide-arrow' %}
+        </button>
+        <button class="splide__arrow splide__arrow--next">
+          {% render 'splide-arrow' %}
+        </button>
+      </div>
+      <div class="splide__track">
+        <ul class="splide__list">
+          {% for block in section.blocks %}
+            <li class="splide__slide splide_image">
+              {% render 'picture',
+                mobileSrc: block.settings.image_with_text_image2,
+                desktopSrc: block.settings.image_with_text_image
+              %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </slider-img>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "custom-lookbook",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Enter Heading Here",
+      "default": "LOOK BOOK"
+    },
+    {
+      "type": "color",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "#936139"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "range",
+      "label": "Padding Top",
+      "id": "padding_top",
+      "default": 72,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Padding Bottom",
+      "id": "padding_bottom",
+      "default": 72,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Mobile Padding Top",
+      "id": "padding_top1",
+      "default": 72,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": " Mobile Padding Bottom",
+      "id": "padding_bottom1",
+      "default": 72,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "lookbook",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Add a Image",
+          "id": "image_with_text_image"
+        },
+        {
+          "type": "image_picker",
+          "label": "Add a Image For Mobile",
+          "id": "image_with_text_image2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Lookbook"
+    }
+  ]
+}
+{% endschema %}

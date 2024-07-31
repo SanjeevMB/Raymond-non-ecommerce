@@ -1,0 +1,100 @@
+{{ 'section-banner-image-with-text.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+    .section-{{ section.id }}{
+        padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+
+    @media only screen and (min-width: 749px){
+        .section-{{ section.id }}{
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+    }
+{% endstyle %}
+
+<div class="section-{{ section.id }}">
+    <div class="banner__container">
+        <div class="first__image">
+            {% render 'responsive-image', desktopImage: section.settings.banner_first_image, mobileImage: section.settings.first_mobile_img %}
+        </div>
+        <div class="banner__text">
+            <span>{{ section.settings.banner_text }}</span>
+        </div>
+        <div class="second__image">
+            {% render 'responsive-image', desktopImage: section.settings.banner_second_image, mobileImage: section.settings.second_mobile_img %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner Images With Text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "image_picker",
+      "label": "Banner First Image ",
+      "id": "banner_first_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "first_mobile_img",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "image_picker",
+      "label": "Banner Second Image",
+      "id": "banner_second_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_mobile_img",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "text",
+      "label": "Banner Text",
+      "id": "banner_text"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "label": "Padding Top",
+      "id": "padding_top",
+      "default": 32,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Padding Bottom",
+      "id": "padding_bottom",
+      "default": 32,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+
+  ],
+  "presets": [
+    {
+      "name": "Banner Images With Text"
+    }
+  ]
+}
+{% endschema %}
+    

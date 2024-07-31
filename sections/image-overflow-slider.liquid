@@ -1,0 +1,220 @@
+{{ 'image-overflow-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'collection-carousel.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .image_overflow_slider-wrapper .splide__arrow {
+    bottom: -8rem;
+    background-color: {{ section.settings.arrow_color }} !important;
+  }
+  .image_overflow_slider-wrapper .splide__arrows .splide__arrow[disabled] {
+    background-color: rgba(255, 255, 255, 1) !important;
+    border: 1px solid {{ section.settings.arrow_color }} !important;;
+  }
+  .image_overflow_slider-wrapper .splide__arrows .splide__arrow[disabled] svg path {
+    fill: {{ section.settings.arrow_color }} !important;
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }}"> 
+  <div 
+    id="image_overflow_slider-wrapper"
+    class="image_overflow_slider-wrapper {%- unless section.settings.full_width %} overflow-right-page-width {%- endunless -%} {%- if section.settings.page_width %} page-width {%- endif -%}"
+  >
+    <div class="image_overflow_slider-main">
+      {% assign class = 'h1 center' %}
+      {% render 'title-decor', 
+        heading: section.settings.heading,
+        decoration: section.settings.title_decor, 
+        class: class,
+        margin: section.settings.margin_bottom
+      %}
+
+      <splide-carousel
+        class="splide" 
+        id="{{ section.id }}"
+        data-mobilePaddingLeft="0"
+        data-mobilePaddingRight="0"
+        data-desktopPaddingLeft="0"
+        data-desktopPaddingRight="0"
+        data-desktop-per-page="2"
+        data-mobile-per-page="1"
+        data-gap="30"
+        data-desktoparrow={{ section.settings.slider_arrow }}
+        data-mobilearrow={{ section.settings.slider_arrow }}
+        data-desktoppagination={{ section.settings.slider_pagination }}
+        data-mobilepagination={{ section.settings.slider_pagination }}
+        data-autoplay={{ section.settings.slider_autoplay }}
+        data-desktopgap="75"
+        
+      >
+        <div class="splide__arrows image_overflow_slider-arrows {% unless section.settings.slider_arrow %} hidden {%- endunless -%} ">
+          <button class="splide__arrow splide__arrow--prev">
+            {% render 'icon' with 'splide-left-arrow' %}
+          </button>
+          <button class="splide__arrow splide__arrow--next">
+            {% render 'icon' with 'splide-right-arrow' %}
+          </button>
+        </div>
+        <div class="splide__track image_overflow_slider-track">
+          <div class="splide__list">
+            {% for block in section.blocks %}
+              {%- case block.type -%}
+                {%- when 'image_block' -%}
+                  <div class="splide__slide splide-box">
+                    <a href="{{ block.settings.link }}">
+                      <div class="image_box">
+                        {% render 'picture',
+                          class: 'image_box-img',
+                          mobileSrc: block.settings.mobile_image,
+                          desktopSrc: block.settings.desktop_image
+                        %}
+                      </div>
+                    </a>
+                  </div>
+              {%- endcase -%}
+            {% endfor %}
+          </div>
+        </div>
+      </splide-carousel>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Overflow Slider",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": false,
+      "info": "Enable full width for the section (margin on the right will be removed)"
+    },
+    {
+      "type": "checkbox",
+      "id": "page_width",
+      "label": "Page width",
+      "default": false,
+      "info": "Enable page width for the section"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_autoplay",
+      "label": "Slider autoplay",
+      "default": false,
+      "info": "Enable slider autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_arrow",
+      "label": "Slider arrow",
+      "default": true,
+      "info": "Show slider arrow"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_pagination",
+      "label": "Slider pagination",
+      "default": true,
+      "info": "Show slider pagination"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image_block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Overflow Slider"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,132 @@
+{{ 'category-banner-images.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  .section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+  }
+  @media only screen and (min-width: 749px){
+      .section-{{ section.id }}{
+          padding-top: {{ section.settings.padding_top }}px;
+          padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+  }
+{% endstyle %}
+
+<div class="page-width section-{{ section.id }}">
+  <div class="category__wrapper">
+    <div class="category__header">
+      <h1 class="title--decor">{{ section.settings.section_header }}</h1>
+    </div>
+    <div class="grid__cards">
+        <banner-carousel id="{{ section.id }}" class="splide">
+
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                <li class="splide__slide">
+                  <!-- The Page Dots for this particular slider, will updated after migrating the setup from Park Avenue, since the design is same ! -->
+                  {% render 'category-grid-card', block: block %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </banner-carousel>
+    </div>
+  </div>
+</div>
+
+<!-- The necessity for this script here is because of the dependency of the section-id  -->
+<script>
+  document.addEventListener('DOMContentLoaded', ()=> {
+    const splide = new Splide('#{{ section.id }}', {
+      arrows: false,
+      pagination: false,
+      perPage: 3,
+      gap: '16px',
+      drag: false,
+      breakpoints:{
+        980: {
+          type: 'slide',
+          perPage: 1,
+          pagination: true,
+          arrows: false,
+          rewind: true,
+          drag: true,
+        }
+      }
+    }).mount();
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Category Banner Images",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Text Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_header",
+      "label": "Section Heading"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "label": "Padding Top",
+      "id": "padding_top",
+      "default": 32,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Padding Bottom",
+      "id": "padding_bottom",
+      "default": 32,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_images",
+      "name": "Category Images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Category Image",
+          "id": "category_image"
+        },
+        {
+          "type": "text",
+          "label": "Anchor Title",
+          "id": "anchor_title",
+          "info": "Mention the Category Names here !"
+        },
+        {
+          "type": "url",
+          "label": "Anchor Link",
+          "id": "anchor_link",
+          "info": "Mention URL of the Category Page!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Banner Images"
+    }
+  ]
+}
+{% endschema %}

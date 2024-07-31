@@ -1,0 +1,37 @@
+.infinite-scroll_wrapper {
+  display: flex;
+  background: var(--marquee-background-color);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.infinite-scroll_inner {
+  display: flex;
+  align-items: center;
+}
+.infinite-scroll_inner > div {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  animation: marquee-left var(--marquee-speed) linear infinite;
+}
+.infinite-scroll__item {
+  display: flex;
+  align-items: center;
+  margin-right: 1.6rem;
+}
+.infinite-scroll__item img {
+  width: 41.6rem;
+  height: 34rem;
+  object-fit: cover;
+}
+.half_image {
+  margin-left: -22.8rem;
+}
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

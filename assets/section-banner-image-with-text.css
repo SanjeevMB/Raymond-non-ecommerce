@@ -1,0 +1,50 @@
+
+.banner__container{
+    display: grid;
+    grid-template-rows: 1fr 0.5fr 1fr;
+}
+.first__image, 
+.second__image{
+    max-height: 25rem;
+}
+.first__image img, 
+.second__image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.banner__text{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: rgba(77, 150, 116, 0.70);
+    align-items: center;
+}
+
+.banner__text span{
+    color: #FFF;
+    font-size: 2.4rem;
+    font-style: normal;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+@media only screen and (min-width: 749px){
+    .banner__container{
+        grid-template-rows: unset;
+        grid-template-columns: 1fr 0.65fr 1fr;
+    }
+    .first__image, 
+    .second__image{
+        max-height: 40rem;
+    }
+    .banner__text{
+        background: rgba(0, 105, 57, 0.70);
+    }
+    .banner__text span{
+        max-width: 200px;
+        font-size: 4rem;
+    }
+}

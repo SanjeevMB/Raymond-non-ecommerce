@@ -1,0 +1,283 @@
+<script src="{{ "occasion-custom-slider.js" | asset_url }}" defer></script>
+{{ "section-occasion-image-slider.css" | asset_url | stylesheet_tag }}
+
+{% style %}
+  .padding-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .padding-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+  }
+{% endstyle %}
+
+{% capture slider-options-data %}
+  {
+    "autoplay" : {{ section.settings.slider_autoplay }},
+    "pagination" : {{ section.settings.slide_dots }},
+    "arrows" : {{ section.settings.slide_arrows }}
+  }
+{% endcapture %}
+
+<div class="occasion-image-slider padding-{{ section.id }}">
+  <div class="page-width">
+    {% if section.settings.section_heading != blank %}
+      <div class="occasion-image-slider-heading-container">
+        <h2> {{ section.settings.section_heading }} </h2>
+      </div>
+    {% endif %}
+    <custom-slider>
+      <section class="splide" aria-label="Slide Show" data-slider-options='{{ slider-options-data }}'>
+        <div class="splide__track custom-slide">
+          <ul class="splide__list">
+            {% if section.blocks != blank %}
+              {% for block in section.blocks %}
+                {% liquid
+                  assign desktop_image = block.settings.desktop_image
+                  assign mobile_image = block.settings.mobile_image
+                  assign desktop_video = block.settings.desktop_video
+                  assign mobile_video = block.settings.mobile_video
+                  assign slider_heading = block.settings.slider_heading
+                  assign slider_description = block.settings.slider_description
+                  assign slider_button_text = block.settings.button_text
+                  assign slider_button_link = block.settings.button_link
+                  assign text_alignment = block.settings.text_alignment
+                %}
+                {% if forloop.index==1 %}
+                  <li class="splide__slide">
+                    <div class="occasion-image-slider-slider-container">
+                      {% if desktop_image != blank and mobile_image != blank %}
+                        <div class="occasion-image-slider-image-container">
+                          {% render 'picture', desktopSrc: desktop_image, mobileSrc: mobile_image %}
+                        </div>
+                      {% endif %}
+                      <div class="occasion-image-slider-slider-content {{ text_alignment }}">
+                        {% if slider_heading != blank %}
+                          <h2 class="h2">{{ slider_heading }}</h2>
+                        {% endif %}
+                        {% if slider_description != blank %}
+                          <div> {{ slider_description }}</div>
+                        {% endif %}
+                        {% if slider_button_text != blank %}
+                          <a href="{{ slider_button_link }}" class="button">
+                            {{ slider_button_text }}
+                          </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                {% else %}
+                  <li class="splide__slide">
+                    <div class="occasion-image-slider-slider-container">
+                      {% if desktop_image and mobile_image != blank  %}
+                        <div class="occasion-image-slider-image-slider-container">
+                          {% render 'picture', desktopSrc: desktop_image, mobileSrc: mobile_image %}
+                        </div>
+                      {% elsif desktop_video !=blank %} 
+                        <div class="occasion-image-slider-desktop-video-container">
+                          {{ desktop_video | video_tag: autoplay: section.settings.enable_autoplay, loop: section.settings.enable_loop, controls: section.settings.enable_controls, muted: true, class: "lazy" }}
+                        </div>
+                      {% elsif mobile_video != blank %}
+                        <div class="occasion-image-slider-mobile-video-container">
+                          {{ mobile_video | video_tag: autoplay: section.settings.enable_autoplay, loop: section.settings.enable_loop, controls: section.settings.enable_controls, muted: true, class: "lazy" }}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {% for i in (1..3) %}
+                <li class="splide__slide">
+                  {{ "hero-apparel-" | append: i | placeholder_svg_tag }}
+                </li>
+              {% endfor %}  
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+    </custom-slider>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Occasion Image Slider",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_autoplay",
+      "label": "Slide autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_dots",
+      "label": "Show slide dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slide_arrows",
+      "label": "Show slide arrows",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Aspect ratio for slider settings"
+    },
+    {
+      "type": "text",
+      "id": "desktop_slider_aspect_ratio",
+      "label": "Image slide aspect ratio"
+    },
+    {
+      "type": "text",
+      "id": "mobile_slider_aspect_ratio",
+      "label": "Image slide aspect ratio (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Video player settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_controls",
+      "label": "Enable controls",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Play video on loop",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Section padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slider",
+      "name": "occasion",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "video",
+          "id": "desktop_video",
+          "label": "Video"
+        },
+        {
+          "type": "video",
+          "id": "mobile_video",
+          "label": "Video (Mobile)"
+        },
+        {
+          "type": "header",
+          "content": "Text content settings"
+        },
+        {
+          "type": "text",
+          "id": "slider_heading",
+          "label": "Slider heading",
+          "default": "Slider heading"
+        },
+        {
+          "type": "richtext",
+          "id": "slider_description",
+          "label": "Slider description",
+          "default": "<p> Slider description </p>"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Discover Online"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Occasion Image Slider"
+    }
+  ]
+}
+{% endschema %}

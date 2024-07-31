@@ -1,0 +1,12 @@
+{% comment %} 
+    @Usage: {%  render 'slider-image-with-text', block: block %} %}
+{% endcomment %}
+
+<div class="slider__content">
+    <div class="slider__image">
+        <img src="{{ block.settings.collection_image | image_url }}" alt="" width="" height="">
+        <div class="text__content">
+            <span class="te">{{ block.settings.collection_name }}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,362 @@
+{{ 'overflow-carousel.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .section-{{ section.id }}-padding .page-width_overflow_img {
+    padding-right: 0;
+  }
+
+  .park_trending_image_text_carousel .background_color {
+    background-color: {{ section.settings.image_background  }};
+  }
+
+  @media screen and (min-width: 990px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .section-{{ section.id }}-padding  .page-width_overflow_img {
+      padding-right: 5.2rem;
+    }
+
+    .section-{{ section.id }}-padding .add_margin_inline {
+      margin: 0 auto;
+    }
+
+    .section-{{ section.id }}-padding .extra_padding {
+      display: inline-block;
+      padding-inline: {{ section.settings.left_right_padding }}rem;
+    }
+  }
+</style>
+
+<div class="section-{{ section.id }}-padding">
+  <div class="title_wrapper">
+    {% if section.settings.heading != blank %}
+      <div class="heading_style">{{ section.settings.heading }}</div>
+    {% endif %}
+  </div>
+  <div class="page-width {% if section.settings.remove_padding_right %} page-width_overflow_img {% endif %} {% if section.settings.add_margin %} add_margin_inline {% endif %}">
+    <div class="extra_padding">
+      <div class="park_trending_image_text_carousel">
+        
+        <splide-carousel
+          class="splide"
+          id="{{ section.id }}"
+          data-desktop-per-page="{{ section.settings.carousel_no_desktop }}"
+          data-mobile-per-page="{{ section.settings.carousel_no_mobile }}"
+          data-gap-desktop="{{ section.settings.gap_desktop }}"
+          data-gap-mobile="{{ section.settings.gap_mobile }}"
+          data-left-padding-desktop="{{ section.settings.left_padding_desktop }}"
+          data-right-padding-desktop="{{ section.settings.right_padding_desktop }}"
+          data-left-padding-mobile="{{ section.settings.left_padding_mobile }}"
+          data-right-padding-mobile="{{ section.settings.right_padding_mobile }}"
+          data-desktop-arrow="{{ section.settings.desktop_arrow }}"
+          data-mobile-arrow="{{ section.settings.mobile_arrow }}"
+          data-desktop-pagination="{{ section.settings.desktop_pagination }}"
+          data-mobile-pagination="{{ section.settings.mobile_pagination }}"
+          data-autoplay="{{ section.settings.autoplay }}"
+        >
+          <div class="splide__track">
+            <div class="splide__list">
+              {% for block in section.blocks %}
+                {%- case block.type -%}
+                  {%- when 'image_text' -%}
+                    <div class="splide__slide trending_slides">
+                      <a href="{{ block.settings.link }}">
+                        <div
+                          class="
+                            park_trending_overflow_image
+                            {% if block.settings.image_flow %}
+                             park_trending_overflow_image_out
+                            {% else %} park_trending_overflow_image_in {% endif %}
+                            {% if block.settings.border_none %} border_none {% endif %}
+                          "
+                          style="background: {{ section.settings.image_background }}"
+                        >
+                          <div class="park_trending_image_box {% if block.settings.image_flow %} park_trending_image_box_out {% else %} park_trending_image_box_in {% endif %}">
+                            {% render 'picture',
+                              class: '',
+                              mobileSrc: block.settings.mobile_image,
+                              desktopSrc: block.settings.desktop_image
+                            %}
+                          </div>
+                        </div>
+                      </a>
+                      <p class="{{ section.settings.title_heading }} park_trending_title {% if block.settings.border_none %} border_none {% endif %} {% if block.settings.title_within_image %} title_inside {% endif %}">
+                        {{ block.settings.title }}
+                        <svg
+                          class="{% unless block.settings.display_arrow %} display_arrow_icon {% endunless %}"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="21"
+                          height="21"
+                          viewBox="0 0 21 21"
+                          fill="none"
+                        >
+                          <path d="M9.91283 4.30002L15.1395 9.5267H3.85559V11.1878H15.1395L9.91283 16.4145L11.0872 17.5889L18.3189 10.3573L11.0872 3.12561L9.91283 4.30002Z" fill="black"/>
+                        </svg>
+                      </p>
+                    </div>
+                {%- endcase -%}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="arrow_pagination">
+            <div class="splide__arrows">
+              <button class="splide__arrow splide__arrow--prev">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="black"/>
+                </svg>
+              </button>
+              <ul class="splide__pagination"></ul>
+              <button class="splide__arrow splide__arrow--next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z" fill="black"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </splide-carousel>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Overflow image carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Enter heading text"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "carousel_no_desktop",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Carousel in desktop",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "carousel_no_mobile",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Carousel in mobile",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "label": "Gap in desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "label": "Gap in mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "left_padding_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "label": "Left Padding desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "right_padding_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "label": "Right Padding desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "left_padding_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "label": "Left Padding Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "right_padding_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "label": "Right Padding mobile",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "image_background",
+      "label": "Background color"
+    },
+    {
+      "type": "checkbox",
+      "id": "desktop_arrow",
+      "label": "Desktop arrow",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_arrow",
+      "label": "Mobile arrow",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "desktop_pagination",
+      "label": "Desktop pagination",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_pagination",
+      "label": "Mobile pagination",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_padding_right",
+      "label": "Remove padding right mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "add_margin",
+      "label": "Allow margin inline",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "left_right_padding",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "label": "Left And Right Extra Padding",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "label": "Title heading",
+      "id": "title_heading",
+      "options": [
+        {
+          "label": "h2",
+          "value": "h2"
+        },
+        {
+          "label": "h3",
+          "value": "h3"
+        }
+      ],
+      "default": "h2"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "image text",
+      "type": "image_text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Select desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Select mobile image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Enter title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Choose url"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_flow",
+          "label": "Image overflow",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "border_none",
+          "label": "Remove border",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "title_within_image",
+          "label": "Title within image",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "display_arrow",
+          "label": "Display arrow",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Overflow image carousel"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,129 @@
+
+{{ 'custom-blog.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+
+<div class="blog-topcontainer">
+  <div class="blog-heading h1">{{ section.settings.heading }}</div>
+  <div class="blog-content h3">
+    {{ section.settings.para }}</div>
+</div>
+
+
+{% assign recent_posts = blog.articles | sort: 'published_at' | reverse %}
+<div class="recent-post-main">
+  <div class="h2 recent-blog-heading"> Recent Blog Posts</div>
+
+
+<div class="recentpost-container">
+  {% for article in recent_posts limit: 4 %}
+    <div class="blog-post item">
+      <div class="recent-article-image-container">
+        {% render 'picture'
+          , mobileSrc: article.image
+          , desktopSrc: article.image %}
+      </div>
+      <div class="recent-article-data">
+        <div class="date-container body-small">{{ article.published_at | date: '%d %b %y' }}</div>
+        <div> <a href="{{ article.url }}" class="recent-article-title-container main-blog-title h3">{{ article.title }} <span class="blog-arrow"> {% render 'icon' with 'arrow-up-right' %}</span></a></div>
+        <div class="article-desc h5">{{ article.content }}</div>
+
+      </div>
+    </div>
+
+  {% endfor %}
+
+</div>
+</div>
+{% if blog.articles_count > 5 %}
+<div class="main-blog-container blog-page-width">
+  <div class="main-blog-heading h2">All Posts </div>
+  <div class="grid grid--1-col grid--3-col-desktop grid--2-col-tablet ">
+    {% assign all_posts_except_recent = blog.articles | sort: 'published_at' | reverse %}
+    {% for article in all_posts_except_recent offset: 4 %}
+      <div class="grid__item blog-article-container">
+        <div class="recent-article-image-container">
+          {% render 'picture'
+            , mobileSrc: article.image
+            , desktopSrc: article.image %}
+        </div>
+        <div class="main-article-data">
+          <div class="date-container body-small ">{{ article.published_at | date: '%d %b %y' }}</div>
+          <div class="">
+            <a href="{{ article.url }}" class="main-blog-title h4 ">
+              {{ article.title }}
+              <span class="blog-arrow">
+                {% render 'icon' with 'arrow-up-right' %}
+              </span>
+            </a>
+          </div>
+          <div class="article-desc h5">{{ article.content  }}</div>
+
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.main-blog.settings.header.content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": " Blog Heading",
+      "default": "Blog Posts"
+    },
+    {
+      "type": "textarea",
+      "id": "para",
+      "label": "Blog Text",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

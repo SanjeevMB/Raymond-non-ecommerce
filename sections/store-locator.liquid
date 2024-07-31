@@ -1,0 +1,219 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top1 }}px;
+    padding-bottom: {{ section.settings.padding_bottom1 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{{ 'store-locator.css' | asset_url | stylesheet_tag }}
+
+<div class="section-{{ section.id }}-padding color-{{ section.settings.section_color_scheme }}">
+  <div class="{%- unless section.settings.full_width %} page-width {% endunless -%} {% if section.settings.full_width1 %} remove-page-width-mobile{% endif %}">
+    <div class="image_text_custom_main">
+          {% render 'title-decor', 
+            heading: section.settings.heading,
+            decoration: section.settings.title_decor, 
+            class: 'h1 left ',
+            margin: section.settings.margin_bottom,
+            margin-mobile: section.settings.margin_bottom1
+          %}
+      <div class="image_text_container">
+        <div class="it_img_container">
+          {% render 'picture', 
+            mobileSrc: section.settings.image_mobile, 
+            desktopSrc: section.settings.image_desktop 
+          %}
+        </div>
+        <div class="it_text_container">
+          {%- for block in section.blocks -%}
+            {% case block.type %}
+
+              {% when 'title' %}
+                <div class="it_title h2">
+                  {{ block.settings.title }}
+                </div>
+
+              {% when 'description' %}
+                <div class="it_subtitle body-small">
+                  {{ block.settings.subtitle }}
+                </div>
+
+              {% when 'button' %}
+                <a href="{{ block.settings.button_url }}" class="button">
+                    {{ block.settings.button_text }} 
+                </a>
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Store Locator",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "label": "Heading",
+      "id": "heading",
+      "default": "<p>STORE LOCATOR</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading ",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom for Mobile",
+      "id": "margin_bottom1",
+      "default": 28,
+      "info": "bottom margin for the heading mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width1",
+      "label": "Full width In Mobile",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "Color Scheme",
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top1",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top Padding For Mobile",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom1",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": " Bottom Padding For Mobile",
+      "default": 62
+    },
+    {
+      "type": "image_picker",
+      "label": "Image (mobile)",
+      "id": "image_mobile"
+    },
+    {
+      "type": "image_picker",
+      "label": "Image (desktop)",
+      "id": "image_desktop"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "label": "Title",
+          "id": "title",
+          "default": "Find Your Store"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "label": "Description",
+          "id": "subtitle",
+          "default": "<p>subtitle</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "label": "Button Text",
+          "id": "button_text",
+          "default": "View Store"
+        },
+        {
+          "type": "url",
+          "label": "Button URL",
+          "id": "button_url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Store Locator"
+    }
+  ]
+}
+{% endschema %}

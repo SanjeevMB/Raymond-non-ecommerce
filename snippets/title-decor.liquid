@@ -1,0 +1,76 @@
+{% comment %}
+  Accepts:
+  - heading: {String} heading string,
+  - description: {String} description,
+  - decoration: {Boolean} decoration,
+  - class: {String} class
+  - margin: {Number} margin-bottom
+
+  usage:
+  {% assign class = 'h1 center' %}
+  {% render 'title-decor', 
+    heading: section.settings.heading,
+    description: section.settings.description,
+    decoration: section.settings.title_decor, 
+    class: class,
+    margin: section.settings.margin_bottom
+  %}
+
+  Add the below required settings in Schema section settings:
+  {
+    "type": "richtext",
+    "id": "heading",
+    "label": "Heading"
+  },
+  {
+    "type": "checkbox",
+    "id": "title_decor",
+    "label": "Title decor",
+    "info": "select the checkbox if title needs decoration",
+    "default": false
+  },
+  {
+    "type": "range",
+    "label": "Margin bottom",
+    "id": "margin_bottom",
+    "default": 40,
+    "info": "bottom margin for the heading ",
+    "min": 0,
+    "max": 60,
+    "step": 1,
+    "unit": "px"
+  }
+{% endcomment %}
+
+{{ 'title-decor.css' | asset_url | stylesheet_tag }}
+{% style %}
+  .title-{{ section.id }} {
+    margin-bottom: {{ margin | times: 0.75 | round: 0 }}px;
+  }
+  .text-center{
+    text-align:center;
+    color: #936139;
+  }
+  @media screen and (min-width: 750px) {
+    .title-{{ section.id }} {
+      margin-bottom: {{ margin }}px;
+    }
+  
+  }
+{% endstyle %}
+
+
+{% if heading != blank or description != blank %}
+  <div class="title-decor-wrapper page-width title-{{ section.id }}">
+    {% if heading != blank %}
+      <div class="{{ class }} {% if decoration %} title--decor{% endif %} uppercase text-center">
+        {{ heading }}
+      </div>
+    {% endif %}
+    {% if description %}
+      <div class="title__decor-description center">
+        {{ description }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,105 @@
+
+{{ 'contact.css' | asset_url | stylesheet_tag }}
+{% style %}
+@media screen and (min-width:750px){
+  
+  .contact-image-container{
+    padding: 0 {{ section.settings.padding }}%;
+  }
+}
+
+{% endstyle %}
+
+<div class="contact-main-container contact-page-width">
+    <div class="contact-heading-wrapper">
+      <div class="contact-heading">
+        {% render 'title-decor', 
+          heading: section.settings.heading,
+          decoration: section.settings.title_decor, 
+          class: 'h2 contact-heading-alignment',
+          margin: section.settings.margin_bottom
+        %}
+      </div>
+      {% if section.settings.description != blank %}
+        <div class="contact-text-container h5">
+            {{ section.settings.description }}
+        </div>
+      {% endif %}
+    </div>
+    {% if section.settings.desktop_image != blank %}
+      <div class="contact-image-container">
+        {% render 'picture',
+          mobileSrc: section.settings.mobile_image,
+          desktopSrc: section.settings.desktop_image
+        %}
+      </div>
+    {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "image-banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Show heading",
+      "default": "<p>How can we help?</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading ",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Extra Padding To Image For Desktop",
+      "id": "padding",
+      "default": 0,
+      "info": "Extra Padding for Desktop ",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "label": "Enter Banner Text",
+      "id": "description"
+    },
+    {
+      "type": "image_picker",
+      "label": "Desktop Image",
+      "id": "desktop_image"
+    },
+    {
+      "type": "image_picker",
+      "label": "Mobile Image",
+      "id": "mobile_image"
+    }
+  ],
+  "blocks": [
+
+  ],
+  "presets": [
+    {
+      "name": "contact-banner"
+    }
+  ]
+}
+{% endschema %}
+    

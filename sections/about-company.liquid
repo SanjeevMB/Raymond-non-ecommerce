@@ -1,0 +1,186 @@
+{{ 'about-company.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+.padding-{{ section.id }} {
+  padding-top:{{ section.settings.padding_top1 }}px;
+  padding-bottom: {{ section.settings.padding_bottom1 }}px;
+  }
+  @media screen and (min-width:750px){
+    .padding-{{ section.id }} {
+  padding-top:{{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  }
+
+{% endstyle %}
+
+<div class=" padding-{{ section.id }}">
+{% for block in section.blocks %}
+  <div class="image-text image-align-{{ block.settings.image_alignment }} color-{{ section.settings.color_scheme }}">
+    <div class="about-text_image_container">
+      {% render 'picture', mobileSrc: block.settings.select_image, desktopSrc: block.settings.select_image %}
+    </div>
+    <div class="image-text-text-container text-alignment-{{ block.settings.text_alignment }}">
+      <div class="text-wrapper">
+        <div class="image-text-heading h2">
+          {{ block.settings.text }}
+        </div>
+        <div class="image-text_para h4">
+          {{ block.settings.paragraph }}
+        </div>
+        {% if block.settings.name != blank %}
+          <div class="name-position-wrapper">
+            <div class="h4 chairman-name">{{ block.settings.name }}</div>
+            <div class="h5 chair-position">{{ block.settings.position }}</div>
+          </div>
+        {% endif %}
+        {% if block.settings.select_image1 != blank %}
+        <div class="about-logo-container">
+            {% render 'picture', mobileSrc: block.settings.select_image1, desktopSrc: block.settings.select_image1 %}
+        </div>
+        {% endif %}
+        <a href="{{ block.settings.link }}" class="h5 readmore-btn">{{ block.settings.readmore }}</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% schema %}
+{
+  "name": "about-image-text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top1",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Padding Top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom1",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-text",
+      "name": "image-text",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Enter Text",
+          "id": "text"
+        },
+        {
+          "type": "richtext",
+          "label": "Enter Paragraph",
+          "id": "paragraph"
+        },
+        {
+          "type": "text",
+          "label": "Enter Name Of Chairman",
+          "id": "name"
+        },
+        {
+          "type": "text",
+          "label": "Enter Position",
+          "id": "position"
+        },
+        {
+          "type": "image_picker",
+          "label": "select logo",
+          "id": "select_image1"
+        },
+        {
+          "type": "text",
+          "label": "readmore text",
+          "id": "readmore"
+        },
+        {
+          "type": "url",
+          "label": "Enter LInk",
+          "id": "link"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "image_picker",
+          "label": "select image",
+          "id": "select_image"
+        },
+        {
+          "type": "select",
+          "id": "image_alignment",
+          "label": "Image Alignment",
+          "options": [
+            {
+              "value": "row",
+              "label": "Left"
+            },
+            {
+              "value": "row-reverse",
+              "label": "Right"
+            }
+          ],
+          "default": "row"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Company-Image-Text"
+    }
+  ]
+}
+{% endschema %}

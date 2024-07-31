@@ -1,0 +1,81 @@
+.slider__container{
+    margin: 24px 0 0 16px;
+}
+.text__content{
+    position: absolute;
+    bottom: 2.4rem;
+    background-color: #08693a;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: .8rem;
+}
+
+.section__content{
+    margin: 0 23px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    text-align: center;
+}
+.section__content h1{
+    font-size: 2.4rem;
+}
+
+.slider__content img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ---- Splide.js Custom Progress Bar Slider ---- */
+.my-slider-progress {
+    margin-top: 2.4rem;
+    background: #D9D9D9;
+}
+.my-slider-progress-bar {
+    display: block;
+    background: #026C48;
+    height: 2px;
+    transition: width 400ms ease;
+}
+
+
+@media only screen and (min-width: 980px){
+    .slider__container{
+        margin: unset;
+    }
+    .section__wrapper{
+        display: flex;
+        gap: 2.1rem;
+    }
+    .section__content{
+        margin: 0 0 0 30px;
+        min-width: fit-content;
+        justify-content: center;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: unset;
+        gap: 2.4rem;
+        text-align: unset;
+    }
+    .section__desc{
+        font-size: 2rem;
+        max-width: 350px;
+    }
+    .section__content h1{
+        font-size: 4.0rem;
+    }
+    .slider__image{
+        max-width: 100%;
+        width: 100%;
+        position: relative;
+    }
+    .slider__image img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

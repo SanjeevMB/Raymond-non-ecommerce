@@ -1,0 +1,32 @@
+.title-decor-wrapper p {
+  margin: 0;
+}
+.title--decor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.title--decor:before,
+.title--decor:after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(var(--color-button), var(--alpha-button-background));
+}
+.title--decor.center {
+  justify-content: center;
+}
+.title--decor.left {
+  justify-content: flex-start;
+}
+.title--decor.right {
+  justify-content: flex-end;
+}
+.title__decor-description {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  color: rgba(0, 0, 0, 1);
+  line-height: 1.6em;
+  text-transform: capitalize;
+}

@@ -1,0 +1,150 @@
+{{ 'about-text-image.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top2 }}px;
+    padding-bottom: {{ section.settings.padding_bottom2 }}px;
+  }
+  .blog-page-width .left{
+    text-align: left;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+</style>
+<div class="section-{{ section.id }}-padding">
+  <div class="blog-page-width">
+    {% render 'title-decor', 
+      heading: section.settings.heading,
+      decoration: section.settings.title_decor, 
+      class: 'h1 left',
+      margin: section.settings.margin_bottom
+    %}
+    <div class="body-small counter-section-text">{{ section.settings.enter_text }}</div>
+    <div class="grid grid--1-col grid--3-col-desktop grid--2-col-tablet ">
+      {% for block in section.blocks %}
+        <div class="grid__item counter-main">
+          <div class="count-image-container">
+            {% render 'picture',
+              mobileSrc: block.settings.image,
+              desktopSrc: block.settings.image
+            %}
+          </div>
+          <div class="counter-data">
+            <div class="counter-content">{{ block.settings.text1 }}</div>
+            <div class="counter-text">{{ block.settings.text2 }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Text Image",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_decor",
+      "label": "Title decor",
+      "info": "select the checkbox if title needs decoration",
+      "default": false
+    },
+    {
+      "type": "range",
+      "label": "Margin bottom",
+      "id": "margin_bottom",
+      "default": 40,
+      "info": "bottom margin for the heading ",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "label": "enter text",
+      "id": "enter_text"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top2",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding Mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom2",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding Mobile",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-text",
+      "name": "image-text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image"
+        },
+        {
+          "type": "text",
+          "label": "Enter Text",
+          "id": "text1"
+        },
+        {
+          "type": "text",
+          "label": "Enter Text",
+          "id": "text2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Text Image"
+    }
+  ]
+}
+{% endschema %}
