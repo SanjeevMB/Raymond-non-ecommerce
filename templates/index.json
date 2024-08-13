@@ -240,6 +240,8 @@
         "slide_KbdqpL": {
           "type": "slide",
           "settings": {
+            "image": "shopify:\/\/shop_images\/woman-in-the-city_925x_a88db530-3ebe-4f86-b22e-4dcfe7004ca6.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/woman-in-the-city_925x_a88db530-3ebe-4f86-b22e-4dcfe7004ca6.jpg",
             "slide_url": "",
             "image_overlay_opacity": 0,
             "color_scheme": ""
