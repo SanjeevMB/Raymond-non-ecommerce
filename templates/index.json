@@ -235,15 +235,19 @@
         "collection_block_rRktJU": {
           "type": "collection_block",
           "settings": {
-            "title": "",
-            "link": ""
+            "desktop_image": "shopify:\/\/shop_images\/pretty-gold-necklace_925x_2102c87e-3519-4bb7-bf82-8f05114d0f01.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/pretty-gold-necklace_925x_2102c87e-3519-4bb7-bf82-8f05114d0f01.jpg",
+            "title": "Second",
+            "link": "shopify:\/\/products\/chain-bracelet"
           }
         },
         "collection_block_jfQEK4": {
           "type": "collection_block",
           "settings": {
-            "title": "",
-            "link": ""
+            "desktop_image": "shopify:\/\/shop_images\/stylish-summer-necklace_925x_85979950-59d1-4a8a-af46-0fd7945a875a.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/stylish-summer-necklace_925x_85979950-59d1-4a8a-af46-0fd7945a875a.jpg",
+            "title": "Third",
+            "link": "shopify:\/\/products\/antique-drawers"
           }
         }
       },
