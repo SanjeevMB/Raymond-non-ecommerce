@@ -155,30 +155,22 @@
         "video_block_zfLC4X": {
           "type": "video-block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Rectangle_3.png",
-            "mobile_image": "shopify:\/\/shop_images\/Rectangle_3_1.png",
             "loop": true,
             "autoplay": false,
-            "controls": false,
-            "thumbnail_cover_image": "shopify:\/\/shop_images\/green-t-shirt.jpg"
+            "controls": false
           }
         },
         "video_block_PFRfqA": {
           "type": "video-block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Rectangle_3.png",
-            "mobile_image": "shopify:\/\/shop_images\/Rectangle_3_1.png",
             "loop": true,
             "autoplay": false,
-            "controls": false,
-            "thumbnail_cover_image": "shopify:\/\/shop_images\/kids-beanie.jpg"
+            "controls": false
           }
         },
         "video_block_dRqzxC": {
           "type": "video-block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Rectangle_3.png",
-            "mobile_image": "shopify:\/\/shop_images\/Rectangle_3_1.png",
             "loop": true,
             "autoplay": false,
             "controls": false
@@ -187,8 +179,6 @@
         "video_block_9Yfye8": {
           "type": "video-block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Rectangle_3.png",
-            "mobile_image": "shopify:\/\/shop_images\/Rectangle_3_1.png",
             "loop": true,
             "autoplay": false,
             "controls": false
@@ -197,8 +187,6 @@
         "video_block_LqJxdq": {
           "type": "video-block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Rectangle_3.png",
-            "mobile_image": "shopify:\/\/shop_images\/Rectangle_3_1.png",
             "loop": true,
             "autoplay": false,
             "controls": false
@@ -207,8 +195,6 @@
         "video_block_gG8qCm": {
           "type": "video-block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Rectangle_3.png",
-            "mobile_image": "shopify:\/\/shop_images\/Rectangle_3_1.png",
             "loop": true,
             "autoplay": false,
             "controls": false
@@ -234,68 +220,53 @@
         "padding-bottom": 0
       }
     },
-    "slideshow_image_a6Hybq": {
-      "type": "slideshow-image",
+    "collection_carousel_Nqkkzx": {
+      "type": "collection-carousel",
       "blocks": {
-        "slide_KbdqpL": {
-          "type": "slide",
+        "collection_block_EKyG8g": {
+          "type": "collection_block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/woman-in-the-city_925x_a88db530-3ebe-4f86-b22e-4dcfe7004ca6.jpg",
-            "image_mobile": "shopify:\/\/shop_images\/woman-in-the-city_925x_a88db530-3ebe-4f86-b22e-4dcfe7004ca6.jpg",
-            "slide_url": "",
-            "image_overlay_opacity": 0,
-            "color_scheme": ""
+            "desktop_image": "shopify:\/\/shop_images\/Power-Drops-9_1.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/Power-Drops-9_1.jpg",
+            "title": "first",
+            "link": "shopify:\/\/products\/chain-bracelet"
           }
         },
-        "slide_fMgfAg": {
-          "type": "slide",
+        "collection_block_rRktJU": {
+          "type": "collection_block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/putting-on-your-shoes_925x_048a930f-f4fd-4515-bd9c-78d7aa221c4b.jpg",
-            "image_mobile": "shopify:\/\/shop_images\/putting-on-your-shoes_925x_048a930f-f4fd-4515-bd9c-78d7aa221c4b.jpg",
-            "slide_url": "",
-            "image_overlay_opacity": 0,
-            "color_scheme": ""
+            "title": "",
+            "link": ""
           }
         },
-        "slide_hjifqz": {
-          "type": "slide",
+        "collection_block_jfQEK4": {
+          "type": "collection_block",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Power-Drops-9_1.jpg",
-            "image_mobile": "shopify:\/\/shop_images\/Power-Drops-9_1.jpg",
-            "slide_url": "",
-            "image_overlay_opacity": 0,
-            "color_scheme": "background-1"
+            "title": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "slide_KbdqpL",
-        "slide_fMgfAg",
-        "slide_hjifqz"
+        "collection_block_EKyG8g",
+        "collection_block_rRktJU",
+        "collection_block_jfQEK4"
       ],
       "settings": {
-        "section_heading": "",
+        "heading": "",
         "title_decor": false,
         "margin_bottom": 40,
-        "section_heading_size": "h1",
-        "desktop_content_position": "center",
-        "custom_class": "",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "layout": "full_bleed",
-        "slide_height": "large",
-        "slider_visual": "counter",
-        "slider_dots_overlay": true,
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "accessibility_info": "Slideshow about our brand"
+        "full_width": false,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "image_background": "",
+        "image_flow": true
       }
     }
   },
   "order": [
     "slideshow_wkFWpy",
     "video_thumbnail_AYmeMC",
-    "slideshow_image_a6Hybq"
+    "collection_carousel_Nqkkzx"
   ]
 }
