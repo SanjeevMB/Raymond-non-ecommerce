@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "name": "t:sections.footer.name",
   "type": "footer",
@@ -9,21 +18,21 @@
           "type": "link_list",
           "settings": {
             "heading": "Quick links",
-            "menu": "footer-menu-1"
+            "menu": "footer"
           }
         },
         "link_list_LQD6FF": {
           "type": "link_list",
           "settings": {
             "heading": "Quick links",
-            "menu": "footer-menu-2"
+            "menu": ""
           }
         },
         "link_list_pQbhR6": {
           "type": "link_list",
           "settings": {
             "heading": "Quick links",
-            "menu": "footer-menu-3"
+            "menu": ""
           }
         },
         "text_naRNq4": {
@@ -99,7 +108,6 @@
       "settings": {
         "color_scheme": "background-2",
         "color_scheme_bottom": "",
-        "footer_logo": "shopify:\/\/shop_images\/Layer_1_2.svg",
         "newsletter_enable": true,
         "newsletter_heading": "Newsletter",
         "newsletter_subheading": "Get updates straight to your inbox about ColorPlus.",
